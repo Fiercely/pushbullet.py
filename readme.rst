@@ -29,13 +29,10 @@ is used instead of passwords.
 Installation
 ------------
 
-The easiest way is to just open your favorite terminal and type
+This is a fork of the original pushbullet.py by randomchars, this Fork allows you to retrieve SMS messages from Pushbullet api.
+If you already have pushbullet.py installed from pip, by installing with below command, the original will be overwritten by this one.
 
-::
-
-    pip install pushbullet.py
-
-Alternatively you can clone this repo and install it with
+You can clone this repo and install it with
 
 ::
 
