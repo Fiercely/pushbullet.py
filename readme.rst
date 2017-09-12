@@ -331,6 +331,24 @@ When specified, all sent SMS will be encrypted. Note that the use of end-to-end 
 
 Note that Pushbullet supportes End-To-End encryption only in SMS, notification mirroring and universal copy & paste. Your pushes will not be end-to-end encrypted.
 
+Retrieving SMS messages
+~~~~~~~~~~~~~~~~~~~~
+Threads are conversations with peers via SMS, the method below allows you to retrieve all saved SMS in pushbullet api
+.. code:: python
+
+    device = pb.devices[0]
+    threads = pb.get_sms_threads(device)
+    thread_one = threads[0]
+
+Thread is a SMS conversation with a particular peer, identified by a thread id , that you are able to retrieve from get_sms_threads(device), this returns an array of all SMS saved in Pushbullet for given peer (thread_identification)
+.. code:: python
+
+    device = pb.devices[0]
+    sms_peer = pb.get_sms_thread(device, thread_one['id'])
+    """
+    each SMS contains the following keys 'timestamp', 'id'(identification of sms), 'body' (sms content), 'direction' (if its incoming msg, or outgoing), 'type'(sms) 
+    """
+
 
 Error checking
 ~~~~~~~~~~~~~~

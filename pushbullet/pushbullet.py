@@ -26,6 +26,7 @@ class Pushbullet(object):
     PUSH_URL = "https://api.pushbullet.com/v2/pushes"
     UPLOAD_REQUEST_URL = "https://api.pushbullet.com/v2/upload-request"
     EPHEMERALS_URL = "https://api.pushbullet.com/v2/ephemerals"
+    PERMANENTS_URL = "https://api.pushbullet.com/v2/permanents/{}{}"
 
     def __init__(self, api_key, encryption_password=None, proxy=None):
         self.api_key = api_key
@@ -330,6 +331,32 @@ class Pushbullet(object):
         r = self._session.post(self.EPHEMERALS_URL, data=json.dumps(data))
         if r.status_code == requests.codes.ok:
             return r.json()
+        raise PushError(r.text)
+    
+    def get_sms_threads(self, device):
+        """
+        :params device identification, alphanumeric key for device required to retrieve the sms conversations
+        returns an array of SMS conversations/threads, where each thread contains the conversation with each number 
+        """
+        r = self._session.get(self.PERMANENTS_URL.format(device.device_iden, "_threads"))
+        if r.status_code == requests.codes.ok:
+            threads = json.loads(r.text)
+            return threads['threads']
+        
+        raise PushError(r.text)
+    
+    def get_sms_thread(self, device, thread):
+        """
+        :params 
+            device object
+            thread identification, integer key for thread to retrieve SMS from, you should be able to get this values from get_sms_threads() 
+            for instance and pass the one you wish to retrieve
+        returns an array incoming and outgoing SMS for given thread, where each sms contains the 'timestamp', 'id', 'body', 'direction', 'type' fields
+        """
+        r = self._session.get(self.PERMANENTS_URL.format(device.device_iden, "_thread_{}".format(thread)))
+        if r.status_code == requests.codes.ok:
+            thread = json.loads(r.text)
+            return thread['thread']
         raise PushError(r.text)
 
     def _encrypt_data(self, data):
