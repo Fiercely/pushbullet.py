@@ -4,8 +4,8 @@ import sys
 
 from setuptools import setup
 
-with open("./pushbullet/__version__.py") as version_file:
-    version = version_file.read().split("\"")[1]
+__version__ = "0.12.0"
+
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -27,14 +27,14 @@ def read(fname):
 
 setup(
     name = "pushbullet.py",
-    version = version,
+    version = __version__,
     author = "Richard Borcsik",
     author_email = "borcsikrichard@gmail.com",
     description = ("A simple python client for pushbullet.com"),
     license = "MIT",
     keywords = "push android pushbullet notification",
     url = "https://github.com/randomchars/pushbullet.py",
-    download_url="https://github.com/randomchars/pushbullet.py/tarball/" + version,
+    download_url="https://github.com/randomchars/pushbullet.py/tarball/" + __version__,
     packages=['pushbullet'],
     long_description=read('readme.md'),
     classifiers=[
