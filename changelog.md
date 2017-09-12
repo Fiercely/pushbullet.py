@@ -1,5 +1,9 @@
 # Changelog
 
+- 0.12.0
+
+	- Add support for SMS retrieval 
+	
 - 0.4.1
 
    - Fix installation, update the API url.
